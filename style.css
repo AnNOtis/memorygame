@@ -1,0 +1,32 @@
+.card {
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  vertical-align: middle;
+  text-align: center;
+  box-shadow: 1px 1px 1px 0 #aaaaaa;
+  transition: background-color 0.3s;
+  color: #fff;
+  font-size: 24px;
+}
+
+.isOpened {
+  background-color: #43ED43;
+  color: #333;
+}
+
+.isClose {
+  color: #fff;
+}
+
+.isFlipped {
+  color: #333;
+}
+
+.isError {
+  background-color: #FF9999;
+}
