@@ -1,9 +1,11 @@
 var Game = React.createClass({
   displayName: 'Game',
-  getInitialState: function(){
+
+  getInitialState() {
     return {};
   },
-  shuffle: function(arr){
+
+  shuffle(arr) {
     for (var i = 0; i <= arr.length - 1; i++) {
       var target = Math.floor(Math.random() * (arr.length - 1));
       var temp = arr[i];
@@ -12,13 +14,15 @@ var Game = React.createClass({
     };
     return arr;
   },
-  startGame: function(words){
+
+  startGame(words) {
     var words = this.shuffle(words);
     this.setState({
       words: words
     });
   },
-  render: function () {
+
+  render() {
     return (
       this.state.words ? <GameBoard words={this.state.words}/> : <WordForm onWordsEnter={this.startGame} />
     );

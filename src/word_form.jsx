@@ -1,9 +1,11 @@
 var WordForm = React.createClass({
   displayName: 'WordForm',
-  getInitialState: function(){
+
+  getInitialState() {
     return {};
   },
-  submitWords: function(e){
+
+  submitWords(e) {
     e.preventDefault();
     var node = this.refs.words_field.getDOMNode();
     var input = node.value.trim();
@@ -14,12 +16,14 @@ var WordForm = React.createClass({
       this.setError('unless more than one word!');
     }
   },
-  setError: function(msg){
+
+  setError(msg) {
     this.setState({
       error: msg
     })
   },
-  render: function () {
+
+  render() {
     return (
       <form onSubmit={this.submitWords}>
         <h2>Input words you love to start the game: </h2>

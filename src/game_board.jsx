@@ -1,12 +1,13 @@
 var GameBoard = React.createClass({
   displayName: 'GameBoard',
-  getInitialState: function(){
+
+  getInitialState() {
     var cardStatus = (function(that){
       var arr = []
       for(var i=0; i<= that.props.words.length - 1; i++){
         arr[i] = "close";
       }
-      return arr
+      return arr;
     })(this);
 
     return {
@@ -14,7 +15,8 @@ var GameBoard = React.createClass({
       tryNumber: 0
     };
   },
-  flipCard: function(index){
+
+  flipCard(index) {
     var flippedCardIndex = _.findIndex(this.state.cardStatus, function(status){return status == "flipped"});
     if(flippedCardIndex < 0){
       this.state.cardStatus[index] = "flipped";
@@ -41,7 +43,8 @@ var GameBoard = React.createClass({
     }
     this.forceUpdate();
   },
-  isGameEnd: function(){
+
+  isGameEnd(){
     var end = true;
     _.forEach(this.state.cardStatus, function(status, index){
       if(status != 'opened'){
@@ -50,7 +53,8 @@ var GameBoard = React.createClass({
     })
     return end;
   },
-  render: function(){
+
+  render(){
     return (
       <div>
         <p>狀態：{this.state.message}</p>

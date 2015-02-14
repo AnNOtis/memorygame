@@ -1,9 +1,11 @@
 var Card = React.createClass({
   displayName: 'Card',
-  flipCard: function(){
+
+  flipCard() {
     this.props.handleClick(this.props.index);
   },
-  render: function(){
+
+  render() {
     var status = "";
     if(this.props.status == "flipped"){
       status = "isFlipped";
