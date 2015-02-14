@@ -1,6 +1,10 @@
 var GameBoard = React.createClass({
   displayName: 'GameBoard',
 
+  propTypes: {
+    words: React.propTypes.arrayOf(React.propTypes.string).isRequired,
+  },
+
   getInitialState() {
     var cardStatus = (function(that){
       var arr = []

@@ -1,6 +1,10 @@
 var WordForm = React.createClass({
   displayName: 'WordForm',
 
+  propTypes: {
+    onWordsEnter: React.PropTypes.func.isRequired,
+  },
+
   getInitialState() {
     return {};
   },
