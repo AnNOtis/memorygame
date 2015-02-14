@@ -2,7 +2,7 @@ var WordForm = React.createClass({
   displayName: 'WordForm',
 
   propTypes: {
-    onWordsEnter: React.PropTypes.func.isRequired,
+    onWordsEntered: React.PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -15,7 +15,7 @@ var WordForm = React.createClass({
     var input = node.value.trim();
     var words = input.split(/[^a-zA-z]+/);
     if(words.length >= 2){
-      this.props.onWordsEnter(words.concat(words));
+      this.props.onWordsEntered(words.concat(words));
     }else{
       this.setError('unless more than one word!');
     }

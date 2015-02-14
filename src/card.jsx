@@ -3,12 +3,12 @@ var Card = React.createClass({
 
   propTypes: {
     word: React.PropTypes.string.isRequired,
-    handleClick: React.PropTypes.func.isRequired,
+    onCardClicked: React.PropTypes.func.isRequired,
   },
 
 
   flipCard() {
-    this.props.handleClick(this.props.index);
+    this.props.onCardClicked(this.props.index);
   },
 
   render() {

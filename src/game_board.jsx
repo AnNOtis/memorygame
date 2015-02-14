@@ -66,7 +66,7 @@ var GameBoard = React.createClass({
         {
           this.props.words.map(function(word, index){
             return (
-              <Card key={index} handleClick={this.flipCard} word={word} index={index} status={this.state.cardStatus[index]} />
+              <Card key={index} onCardClicked={this.flipCard} word={word} index={index} status={this.state.cardStatus[index]} />
             );
           }.bind(this))
         }

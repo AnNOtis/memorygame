@@ -24,7 +24,7 @@ var Game = React.createClass({
 
   render() {
     return (
-      this.state.words ? <GameBoard words={this.state.words}/> : <WordForm onWordsEnter={this.startGame} />
+      this.state.words ? <GameBoard words={this.state.words}/> : <WordForm onWordsEntered={this.startGame} />
     );
   }
 });
