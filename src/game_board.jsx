@@ -81,7 +81,7 @@ var GameBoard = React.createClass({
     return (
       <div>
         <p>狀態：{this.state.message}</p>
-        <p>錯誤次數：{this.state.tryNumber}</p>
+        <p>已經找到：({this.state.found} &frasl; {this.props.words.length/2})</p>
         {
           this.props.words.map(function(word, index){
             var isFirstFlip = index === this.state.firstFlipIndex;
