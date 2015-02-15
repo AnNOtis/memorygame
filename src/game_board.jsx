@@ -2,50 +2,69 @@ var GameBoard = React.createClass({
   displayName: 'GameBoard',
 
   propTypes: {
-    words: React.propTypes.arrayOf(React.propTypes.string).isRequired,
+    words: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
   },
 
   getInitialState() {
-    var cardStatus = (function(that){
-      var arr = []
-      for(var i=0; i<= that.props.words.length - 1; i++){
-        arr[i] = "close";
-      }
-      return arr;
-    })(this);
 
     return {
-      cardStatus: cardStatus,
-      tryNumber: 0
+      correctIndexes: [],
+      wrongIndexes: [],
+      firstFlipIndex: null,
+      found: 0,
+      message: '選一張牌',
+      isWaiting: false,
     };
   },
 
   flipCard(index) {
-    var flippedCardIndex = _.findIndex(this.state.cardStatus, function(status){return status == "flipped"});
-    if(flippedCardIndex < 0){
-      this.state.cardStatus[index] = "flipped";
-      this.state.message = "翻開第一張卡片";
+    if(this.state.isWaiting){
+      return;
+    }
+
+    var found = this.state.found;
+    var firstFlipIndex = this.state.firstFlipIndex;
+    var correctIndexes = this.state.correctIndexes;
+    var words = this.props.words;
+
+    if(firstFlipIndex === null){
+      this.setState({
+        firstFlipIndex: index,
+        message: '選擇另一張牌'
+      })
+      return;
+    }
+
+    if(words[index] === words[firstFlipIndex]){
+      this.setState({
+        firstFlipIndex: null,
+        found: found+1,
+        correctIndexes: correctIndexes.concat([index, firstFlipIndex]),
+        message: '答對囉！！'
+      });
     }else{
-      if(this.props.words[index] === this.props.words[flippedCardIndex]){
-        this.state.cardStatus[index] = "opened";
-        this.state.cardStatus[flippedCardIndex] = "opened";
-        this.state.message = "對了喔！！";
-      }else{
-        this.state.message = "錯了喔！";
-        this.state.cardStatus[index] = "error";
-        this.state.cardStatus[flippedCardIndex] = "error";
-        this.state.tryNumber += 1
-        setTimeout(function(){
-          this.state.cardStatus[index] = "close";
-          this.state.cardStatus[flippedCardIndex] = "close";
-          this.forceUpdate();
-        }.bind(this), 1000)
-      }
+      this.setState({
+        isWaiting: true,
+        firstFlipIndex: null,
+        wrongIndexes: [index, firstFlipIndex],
+        message: '答錯囉！！'
+      });
     }
-    if(this.isGameEnd()){
-      this.state.message = "恭喜全對！";
-    }
-    this.forceUpdate();
+
+    setTimeout(
+      () =>{
+        if(!this.isMounted()){
+          return;
+        }
+
+        this.setState({
+          isWaiting: false,
+          message: '選一張牌',
+          wrongIndexes: [],
+        });
+      },
+      2000
+    );
   },
 
   isGameEnd(){
@@ -65,8 +84,19 @@ var GameBoard = React.createClass({
         <p>錯誤次數：{this.state.tryNumber}</p>
         {
           this.props.words.map(function(word, index){
+            var isFirstFlip = index === this.state.firstFlipIndex;
+            var isCorrect = _.contains(this.state.correctIndexes, index);
+            var isWrong = _.contains(this.state.wrongIndexes, index);
             return (
-              <Card key={index} onCardClicked={this.flipCard} word={word} index={index} status={this.state.cardStatus[index]} />
+              <Card
+                key={index}
+                index={index}
+                word={word}
+                isFlipped={isFirstFlip || isCorrect || isWrong}
+                isCorrect={isCorrect}
+                isWrong={isWrong}
+                onCardClicked={this.flipCard}
+               />
             );
           }.bind(this))
         }
